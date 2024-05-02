@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <values name="small_text_size">12sp</values>
+    <values name="medium_text_size">18sp</values>
+    <values name="large_text_size">24sp</values>
+    <values name="extra_large_text_size">30sp</values>
+</resources>

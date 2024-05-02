@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Akashi\'s List Database</string>
+    <string name="api_website">https://jsonplaceholder.typicode.com/</string>
+    <string name="original_website">https://jsonplaceholder.typicode.com/</string>
+    <string name="main_database">https://mongodb.com</string>
+    <string name="btn_add">Add</string> <!-- Button to add a new item -->
+    <string name="btn_delete">Delete</string> <!-- Button to delete an item -->
+    <string name="btn_update">Update</string> <!-- Button to update an item -->
+    <string name="btn_view">View</string> <!-- Button to view an item -->
+    <string name="btn_view_all">View All</string> <!-- Button to view all items -->
+    <string name="btn_view_all_users">View All Users</string> <!-- Button to view all users -->
+    <string name="login">Login</string> <!-- Button to login -->
+    <string name="logout">Logout</string> <!-- Button to logout -->
+    <string name="btn_register">Register</string> <!-- Button to register -->
+    <string name="btn_search">Search</string> <!-- Button to search -->
+
+</resources>
