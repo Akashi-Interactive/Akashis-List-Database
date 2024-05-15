@@ -5,4 +5,7 @@
     <color name="primary">#6200EE</color>
     <color name="secondary">#03DAC5</color>
     <color name="tertiary">#FF018786</color>
+    <color name="colorPrimary">#00796b</color>
+    <color name="colorPrimaryDark">#00695C</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>
