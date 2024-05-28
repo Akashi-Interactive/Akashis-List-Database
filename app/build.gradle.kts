@@ -1,3 +1,5 @@
+import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,9 +14,10 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1 Yuru Yuri"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        versionNameSuffix = "1-YY"
     }
 
     buildTypes {
@@ -26,6 +29,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
