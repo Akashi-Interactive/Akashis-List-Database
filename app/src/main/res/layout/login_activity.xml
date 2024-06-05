@@ -10,7 +10,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background_1"
+        android:src="@drawable/techno_blue"
         android:contentDescription="@string/app_background"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,21 +28,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
-        <LinearLayout
-            android:id="@+id/superior_bar"
+        <ImageButton
+            android:id="@+id/backButtonRP"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_button"
+            android:src="@android:drawable/btn_star" />
 
-            <ImageButton
-                android:id="@+id/backButtonRP"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:src="@android:drawable/btn_star" />
-        </LinearLayout>
-        
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
