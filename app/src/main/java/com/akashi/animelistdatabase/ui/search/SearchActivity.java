@@ -2,6 +2,7 @@ package com.akashi.animelistdatabase.ui.search;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search_activity);
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
         animeRepository = new AnimeRepository();
 
@@ -78,6 +79,8 @@ public class SearchActivity extends AppCompatActivity {
                 testApiCall(query);
             }
         });
+
+        testApiCall("naruto");
     }
 
     private void testApiCall(String query) {

@@ -21,6 +21,6 @@ public class AnimeRepository {
     }
 
     public Call<ResponseBody> searchAnime(String query) {
-        return apiService.searchAnime(query, 5);
+        return apiService.searchAnime(query, 10);
     }
 }
