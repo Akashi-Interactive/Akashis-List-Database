@@ -32,6 +32,14 @@
     <string name="card_title_description">Result data title</string>
     <string name="back_button">Button to go back</string>
     <string name="search_hint">Search...</string>
-    <string name="search">Search</string> <!-- Button to search -->
+    <string name="search">Search</string>
+    <string name="anime_image_description">Anime poster image\n</string>
+    <string name="title_eng">Title (ENG):</string>
+    <string name="title_jp">Title (JP):</string>
+    <string name="episodes_data">Episodes:</string>
+    <string name="source_data">Source:</string>
+    <string name="aired_data">Aired:</string>
+    <string name="synopsis_data">Synopsys:</string>
+    <string name="default_text">Default data</string> <!-- Button to search -->
 
 </resources>

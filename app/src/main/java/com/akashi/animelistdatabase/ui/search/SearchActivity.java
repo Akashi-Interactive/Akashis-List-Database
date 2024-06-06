@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akashi.animelistdatabase.R;
+import com.akashi.animelistdatabase.data.model.AnimeTopResponse;
 import com.akashi.animelistdatabase.data.model.CardItem;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akashi.animelistdatabase.R;
-import com.akashi.animelistdatabase.data.model.AnimeResponse;
+import com.akashi.animelistdatabase.data.model.AnimeSearchResponse;
 import com.akashi.animelistdatabase.data.model.CardItem;
 import com.akashi.animelistdatabase.data.repository.AnimeRepository;
 import com.google.gson.Gson;
@@ -54,6 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAlpha(0f);
 
         animeRepository = new AnimeRepository();
 
@@ -80,7 +82,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        testApiCall("naruto");
+        topanime();
     }
 
     private void testApiCall(String query) {
@@ -93,19 +95,65 @@ public class SearchActivity extends AppCompatActivity {
                         Log.d("TestApiCall", "Response body: " + json);
 
                         Gson gson = new Gson();
-                        AnimeResponse animeResponse = gson.fromJson(json, AnimeResponse.class);
+                        AnimeSearchResponse animeResponse = gson.fromJson(json, AnimeSearchResponse.class);
 
-                        List<AnimeResponse.Anime> animes = animeResponse.data;
+                        List<AnimeSearchResponse.Anime> animes = animeResponse.data;
                         List<CardItem> cardItemList = new ArrayList<>();
 
-                        for (AnimeResponse.Anime anime : animes) {
+                        for (AnimeSearchResponse.Anime anime : animes) {
                             String title = anime.title;
                             String imageUrl = anime.images.jpg.imageUrl;
-                            cardItemList.add(new CardItem(title, imageUrl));
+                            int malId = anime.malId;
+                            cardItemList.add(new CardItem(title, imageUrl, malId));
                         }
 
                         cardAdapter = new CardAdapter(cardItemList, SearchActivity.this);
                         recyclerView.setAdapter(cardAdapter);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("TestApiCall", "Error: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TestApiCall", "onFailure: ", t);
+            }
+        });
+    }
+
+    private void topanime() {
+        animeRepository.getTopAnime().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String json = response.body().string();
+                        Log.d("TestApiCall", "Response body: " + json);
+
+                        Gson gson = new Gson();
+                        AnimeTopResponse animeResponse = gson.fromJson(json, AnimeTopResponse.class);
+
+                        List<AnimeSearchResponse.Anime> animes = animeResponse.data;
+                        List<CardItem> cardItemList = new ArrayList<>();
+
+                        for (AnimeSearchResponse.Anime anime : animes) {
+                            String title = anime.title;
+                            String imageUrl = anime.images.jpg.imageUrl;
+                            int malId = anime.malId;
+                            cardItemList.add(new CardItem(title, imageUrl, malId));
+                        }
+
+                        cardAdapter = new CardAdapter(cardItemList, SearchActivity.this);
+                        recyclerView.setAdapter(cardAdapter);
+
+                        recyclerView.animate()
+                                .alpha(1f) // Final alpha value (1 = opaque, 0 = invisible)
+                                .setDuration(1000) // Duration in milliseconds
+                                .setListener(null);
 
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.akashi.animelistdatabase.ui.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import com.akashi.animelistdatabase.R;
 import com.akashi.animelistdatabase.data.model.CardItem;
+import com.akashi.animelistdatabase.ui.anime.AnimeActivity;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -37,8 +39,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.cardText.setText(cardItem.getText());
         Picasso.get().load(cardItem.getImageUrl()).into(holder.cardImage);
 
-        holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(context, "Carta clickeada: " + cardItem.getText(), Toast.LENGTH_SHORT).show();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AnimeActivity.class);
+                intent.putExtra("malId", cardItem.getMalId());
+                v.getContext().startActivity(intent);
+            }
         });
     }
 

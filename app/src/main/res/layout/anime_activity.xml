@@ -1,7 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/techno_blue">
+    android:background="@drawable/techno_blue"
+    tools:context=".ui.anime.AnimeActivity">
 
+    <ImageView
+        android:id="@+id/anime_image"
+        android:layout_width="223dp"
+        android:layout_height="306dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:alpha="1"
+        android:contentDescription="@string/anime_image_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/anime_data"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/blue_transparent"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
+        android:alpha="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anime_image">
+
+        <LinearLayout
+            android:id="@+id/title_data1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/TitleENG"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.51"
+                android:text="@string/title_eng"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/EnglishTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/title_data2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_data1">
+
+            <TextView
+                android:id="@+id/TitleJP"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.51"
+                android:text="@string/title_jp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/JapaneseTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ep_sou_data"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_data2">
+
+            <TextView
+                android:id="@+id/ep_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.51"
+                android:text="@string/episodes_data"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/Episodes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sou_data"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ep_sou_data">
+
+            <TextView
+                android:id="@+id/source_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="@string/source_data"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/Source"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Aired_data"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sou_data">
+
+
+            <TextView
+                android:id="@+id/aired_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.51"
+                android:text="@string/aired_data"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/Aired"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/synopsis_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.35"
+            android:text="@string/synopsis_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_size"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Aired_data" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/synopsis_data"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/Synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                android:textStyle="bold|italic" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
