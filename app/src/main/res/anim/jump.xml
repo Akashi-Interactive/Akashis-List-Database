@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- go up -->
+    <translate
+        android:fromYDelta="0"
+        android:toYDelta="-200"
+        android:fromXDelta="0"
+        android:toXDelta="36"
+        android:duration="200"/>
+    <rotate
+        android:fromDegrees="0"
+        android:toDegrees="10"
+        android:duration="200"/>
+
+    <!-- go down -->
+    <rotate
+        android:fromDegrees="0"
+        android:toDegrees="-10"
+        android:duration="100"
+        android:startOffset="200"/>
+    <translate
+        android:fromYDelta="0"
+        android:toYDelta="200"
+        android:duration="200"
+        android:startOffset="300"/>
+
+    <!-- https://oliver404.medium.com/crear-animaci%C3%B3n-android-con-xml-65118f0b2882 -->
+    <!-- https://developer.android.com/guide/topics/resources/animation-resource -->
+    <!-- https://developer.android.com/studio?utm_source=android-studio&hl=es-419 -->
+</set>
