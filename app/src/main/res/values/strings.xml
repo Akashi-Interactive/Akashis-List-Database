@@ -31,6 +31,7 @@
     <string name="card_image_description">Consulted data image result</string>
     <string name="card_title_description">Result data title</string>
     <string name="back_button">Button to go back</string>
-    <string name="search_hint">Search...</string> <!-- Button to search -->
+    <string name="search_hint">Search...</string>
+    <string name="search">Search</string> <!-- Button to search -->
 
 </resources>
