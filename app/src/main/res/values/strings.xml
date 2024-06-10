@@ -40,6 +40,7 @@
     <string name="source_data">Source:</string>
     <string name="aired_data">Aired:</string>
     <string name="synopsis_data">Synopsys:</string>
-    <string name="default_text">Default data</string> <!-- Button to search -->
+    <string name="default_text">Default data</string>
+    <string name="btn_fav">Favorite Button</string> <!-- Button to search -->
 
 </resources>

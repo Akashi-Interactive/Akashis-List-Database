@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/techno_blue"
@@ -27,10 +28,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:alpha="1"
         android:background="@color/blue_transparent"
         android:paddingHorizontal="10dp"
         android:paddingTop="10dp"
-        android:alpha="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,10 +217,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/synopsis_data"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/synopsis_data">
 
             <TextView
                 android:id="@+id/Synopsis"
@@ -233,4 +234,17 @@
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/FavButton"
+        android:layout_width="78dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/btn_fav"
+        android:scaleType="centerCrop"
+        android:onClick="onFavoriteClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/not_favorite" />
 </androidx.constraintlayout.widget.ConstraintLayout>
