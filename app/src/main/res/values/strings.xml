@@ -41,6 +41,13 @@
     <string name="aired_data">Aired:</string>
     <string name="synopsis_data">Synopsys:</string>
     <string name="default_text">Default data</string>
-    <string name="btn_fav">Favorite Button</string> <!-- Button to search -->
+    <string name="btn_fav">Favorite Button</string>
+    <string name="anime">Anime</string>
+    <string name="manga">Manga</string>
+    <string name="favorite_anime">Favorite anime</string>
+    <string name="favorite_manga">Favorite manga</string>
+    <string name="chapters_data">Chapters:</string>
+    <string name="volume_data">Volumes:</string>
+    <string name="status_data">Status:</string> <!-- Button to search -->
 
 </resources>

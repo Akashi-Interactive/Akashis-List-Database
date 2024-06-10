@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.akashi.animelistdatabase.R
 import com.akashi.animelistdatabase.data.model.card.CardItem
 import com.akashi.animelistdatabase.ui.anime.AnimeActivity
+import com.akashi.animelistdatabase.ui.manga.MangaActivity
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 
@@ -38,10 +39,18 @@ class CardAdapter(private val cardItems: List<CardItem>, private val context: Co
 
         Log.d("CardAdapter", "onBindViewHolder: ${cardItem.getImageUrl()}")
 
-        holder.itemView.setOnClickListener { v ->
-            val intent = Intent(v.context, AnimeActivity::class.java)
-            intent.putExtra("malId", cardItem.getMalId())
-            v.context.startActivity(intent)
+        if(cardItem.getType() == "Anime"){
+            holder.itemView.setOnClickListener { v ->
+                val intent = Intent(v.context, AnimeActivity::class.java)
+                intent.putExtra("malId", cardItem.getMalId())
+                v.context.startActivity(intent)
+            }
+        } else {
+            holder.itemView.setOnClickListener { v ->
+                val intent = Intent(v.context, MangaActivity::class.java)
+                intent.putExtra("malId", cardItem.getMalId())
+                v.context.startActivity(intent)
+            }
         }
     }
 

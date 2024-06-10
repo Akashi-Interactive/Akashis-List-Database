@@ -6,7 +6,8 @@ package com.akashi.animelistdatabase.data.model.card
 class CardItem(
     private var title: String?,
     private var imageUrl: String?,
-    private var malId: Int
+    private var malId: Int,
+    private var type: String
 ) {
 
     fun getTitle(): String? {
@@ -19,5 +20,9 @@ class CardItem(
 
     fun getMalId(): Int {
         return malId
+    }
+
+    fun getType(): String {
+        return type
     }
 }

@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.anime.AnimeActivity" />
+        <activity android:name=".ui.manga.MangaActivity"/>
     </application>
 
 </manifest>

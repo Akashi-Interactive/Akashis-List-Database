@@ -46,6 +46,7 @@
 
     <LinearLayout
         android:id="@+id/options_content"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/search_content"
@@ -55,28 +56,44 @@
 
         <Button
             android:id="@+id/option_anime"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:text="Anime"
+            android:layout_margin="6dp"
+            android:text="@string/anime"
             android:background="@drawable/btn_custom"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/option_manga"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:text="Manga"
+            android:layout_margin="6dp"
+            android:text="@string/manga"
             android:background="@drawable/btn_custom"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/option_favorite_anime"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="Favorite anime"
+            android:text="@string/favorite_anime"
+            android:textSize="@dimen/small_text_size"
+            android:textAlignment="center"
+            android:background="@drawable/btn_custom"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/option_favorite_manga"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:textSize="@dimen/small_text_size"
+            android:text="@string/favorite_manga"
             android:background="@drawable/btn_custom"
             android:textColor="@color/white" />
 
