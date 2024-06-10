@@ -14,10 +14,10 @@
         android:layout_height="69dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/transparent"
         android:contentDescription="@string/btn_fav"
         android:onClick="onFavoriteClick"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
+        android:background="@null"
         android:src="@drawable/bookmark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

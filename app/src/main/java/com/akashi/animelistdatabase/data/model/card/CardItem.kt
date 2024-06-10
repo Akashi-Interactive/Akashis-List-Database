@@ -1,5 +1,8 @@
 package com.akashi.animelistdatabase.data.model.card
 
+/**
+ * Object that represents the CardItem table
+ */
 class CardItem(
     private var title: String?,
     private var imageUrl: String?,

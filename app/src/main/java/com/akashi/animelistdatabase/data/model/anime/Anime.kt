@@ -5,6 +5,9 @@ import com.akashi.animelistdatabase.data.model.basics.Genre
 import com.akashi.animelistdatabase.data.model.basics.Images
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Object that represents the Anime table
+ */
 class Anime {
     @SerializedName("mal_id")
     var malId: Int = 40974

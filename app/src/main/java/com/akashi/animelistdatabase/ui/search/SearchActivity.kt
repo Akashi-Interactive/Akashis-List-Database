@@ -13,6 +13,8 @@ import com.akashi.animelistdatabase.data.enums.ConsultType
 import com.akashi.animelistdatabase.data.model.card.CardItem
 import com.akashi.animelistdatabase.data.model.reponses.AnimesResponse
 import com.akashi.animelistdatabase.data.repository.AnimeRepository
+import com.akashi.animelistdatabase.database.entry.AnimeEntry
+import com.akashi.animelistdatabase.database.helper.AnimeDatabaseHelper
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import okhttp3.ResponseBody
@@ -109,7 +111,7 @@ class SearchActivity : AppCompatActivity() {
         when(consultType){
             ConsultType.ANIME -> topAnimeCall()
             ConsultType.MANGA -> TODO()
-            ConsultType.FAVORITE_ANIME -> TODO()
+            ConsultType.FAVORITE_ANIME -> loadFavoriteAnimes()
             ConsultType.FAVORITE_MANGA -> TODO()
         }
     }
@@ -169,6 +171,9 @@ class SearchActivity : AppCompatActivity() {
             .alpha(1f) // Final alpha value (1 = opaque, 0 = invisible)
             .setDuration(1000) // Duration in milliseconds
             .setListener(null)
+
+        // Notify the adapter that the data set has changed
+        cardAdapter.notifyDataSetChanged()
     }
 
     /**
@@ -230,5 +235,37 @@ class SearchActivity : AppCompatActivity() {
                 Log.e("ApiCall", "onFailure: ", t)
             }
         })
+    }
+
+    /**
+     * Load the favorite animes from the database
+     */
+    private fun loadFavoriteAnimes(){
+        val dbHelper = AnimeDatabaseHelper(this)
+        val db = dbHelper.readableDatabase
+
+        val cursor = db.query(
+            AnimeEntry.TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        val cardItemList = ArrayList<CardItem>()
+
+        while(cursor.moveToNext()){
+            val title = cursor.getString(cursor.getColumnIndexOrThrow(AnimeEntry.COLUMN_TITLE))
+            val imageUrl = cursor.getString(cursor.getColumnIndexOrThrow(AnimeEntry.COLUMN_IMAGE_URL))
+            val malId = cursor.getInt(cursor.getColumnIndexOrThrow(AnimeEntry.COLUMN_MAL_ID))
+            cardItemList.add(CardItem(title, imageUrl, malId))
+            Log.d("SearchActivity", "Anime found in database: ID = $malId, Title = $title, Image URL = $imageUrl")
+        }
+
+        loadCards(cardItemList)
+
+        cursor.close()
     }
 }

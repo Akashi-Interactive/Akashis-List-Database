@@ -2,7 +2,6 @@ package com.akashi.animelistdatabase.ui.anime
 
 import android.content.ContentValues
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -25,35 +24,74 @@ import java.io.IOException
 class AnimeActivity : AppCompatActivity() {
     private lateinit var animeRepository: AnimeRepository
     private lateinit var favoriteButton: ImageButton
-    private  var isFavorite = false
+    private lateinit var animeImageView: ImageView
+    private lateinit var animeDataLayout: ConstraintLayout
+    private lateinit var animeTitle: TextView
+    private lateinit var animeJapaneseTitle: TextView
+    private lateinit var animeSynopsis: TextView
+    private lateinit var animeEpisodes: TextView
+    private lateinit var animeAired: TextView
+    private lateinit var animeSource: TextView
+
+    private var dbHelper: AnimeDatabaseHelper = AnimeDatabaseHelper(this)
+    private var isFavorite = false
+    private var imageUrl : String = ""
+    private lateinit var db: android.database.sqlite.SQLiteDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anime)
 
-        favoriteButton = findViewById(R.id.FavButton)
-
-        val dbHelper = AnimeDatabaseHelper(this)
-        val db = dbHelper.writableDatabase
-
-        val animeDataLayout = findViewById<ConstraintLayout>(R.id.anime_data)
-        val animeImageView = findViewById<ImageView>(R.id.anime_image)
-
-        animeDataLayout.alpha = 0f
-        animeImageView.alpha = 0f
-        favoriteButton.alpha = 0f
-
-        val animeEnglishTitleTextView = findViewById<TextView>(R.id.EnglishTitle)
-        val animeJapaneseTitleTextView = findViewById<TextView>(R.id.JapaneseTitle)
-        val animeSynopsisTextView = findViewById<TextView>(R.id.Synopsis)
-        val animeEpisodesTextView = findViewById<TextView>(R.id.Episodes)
-        val animeAiredTextView = findViewById<TextView>(R.id.Aired)
-        val animeSourceTextView = findViewById<TextView>(R.id.Source)
-
-        animeRepository = AnimeRepository()
-
         val id = intent.getIntExtra("malId", 40974)
         Log.w("AnimeActivity", "ID: $id")
 
+        loadReferences()
+        initializeSystem()
+        initializeLayout()
+        checkIfInFavorites(id)
+        callAnime(id)
+
+        db.close()
+    }
+
+    /**
+     * Function that loads the references to the layout elements
+     */
+    private fun loadReferences(){
+        favoriteButton = findViewById(R.id.FavButton)
+        animeDataLayout = findViewById(R.id.anime_data)
+        animeImageView = findViewById(R.id.anime_image)
+        animeTitle = findViewById(R.id.EnglishTitle)
+        animeJapaneseTitle = findViewById(R.id.JapaneseTitle)
+        animeSynopsis = findViewById(R.id.Synopsis)
+        animeEpisodes = findViewById(R.id.Episodes)
+        animeAired = findViewById(R.id.Aired)
+        animeSource = findViewById(R.id.Source)
+    }
+
+    /**
+     * Function that initializes the system
+     */
+    private fun initializeSystem(){
+        dbHelper = AnimeDatabaseHelper(this)
+        db = dbHelper.writableDatabase
+        animeRepository = AnimeRepository()
+    }
+
+    /**
+     * Function that initializes the layout
+     */
+    private fun initializeLayout(){
+        animeDataLayout.alpha = 0f
+        animeImageView.alpha = 0f
+        favoriteButton.alpha = 0f
+    }
+
+    /**
+     * Function that checks if the anime is in the favorites
+     * @param id The ID of the anime
+     */
+    private fun checkIfInFavorites(id: Int) {
         val projection = arrayOf(AnimeEntry.COLUMN_MAL_ID, AnimeEntry.COLUMN_TITLE)
         val selection = "${AnimeEntry.COLUMN_MAL_ID} = ?"
         val selectionArgs = arrayOf(id.toString())
@@ -73,52 +111,29 @@ class AnimeActivity : AppCompatActivity() {
             val title = cursor.getString(cursor.getColumnIndexOrThrow(AnimeEntry.COLUMN_TITLE))
             Log.d("AnimeActivity", "Anime found in database: ID = $malId, Title = $title")
             isFavorite = true
-            favoriteButton.setImageResource(R.drawable.favorite)
+            favoriteButton.setImageResource(R.drawable.bookmarked)
         } else {
             Log.d("AnimeActivity", "Anime not found in database")
             isFavorite = false
-            favoriteButton.setImageResource(R.drawable.not_favorite)
+            favoriteButton.setImageResource(R.drawable.bookmark)
         }
 
         cursor.close()
+    }
 
+    /**
+     * Function that calls the API to get the anime data
+     * @param id The ID of the anime
+     */
+    private fun callAnime(id: Int){
         val call = animeRepository.getAnime(id)
-
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful && response.body() != null) {
                     try {
                         val json = response.body()?.string()
-                        val gson = Gson()
-                        val animeResponse = gson.fromJson(json, AnimeResponse::class.java)
-                        Log.d("AnimeActivity", animeResponse.toString())
-                        val imageUrl = animeResponse.data?.images?.jpg?.largeImageUrl
-
-                        Glide.with(this@AnimeActivity)
-                            .load(imageUrl)
-                            .into(animeImageView)
-                        animeEnglishTitleTextView.text = animeResponse.data?.title
-                        animeJapaneseTitleTextView.text = animeResponse.data?.titleJapanese
-                        animeSynopsisTextView.text = animeResponse.data?.synopsis
-                        animeEpisodesTextView.text = animeResponse.data?.episodes.toString()
-                        animeAiredTextView.text = animeResponse.data?.aired?.string
-                        animeSourceTextView.text = animeResponse.data?.source
-
-                        animeDataLayout.animate()
-                            .alpha(1f)
-                            .setDuration(1000)
-                            .setListener(null)
-
-                        animeImageView.animate()
-                            .alpha(1f)
-                            .setDuration(1000)
-                            .setListener(null)
-
-                        favoriteButton.animate()
-                            .alpha(1f)
-                            .setDuration(1000)
-                            .setListener(null)
-
+                        processAnimeData(json!!)
+                        showAnimeData()
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -128,31 +143,82 @@ class AnimeActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("AnimeActivity", "Error: " + t.message)
+                Log.e("ApiCall", "onFailure: ", t)
             }
-        })
-
-        db.close()
+        } )
     }
 
+    /**
+     * Function that processes the anime data
+     * @param json The JSON string with the anime data
+     */
+    private fun processAnimeData(json: String){
+        val gson = Gson()
+        val animeResponse = gson.fromJson(json, AnimeResponse::class.java)
+        Log.d("AnimeActivity", animeResponse.toString())
+
+        imageUrl = animeResponse.data?.images?.jpg?.largeImageUrl.toString()
+
+        Glide.with(this@AnimeActivity)
+            .load(imageUrl)
+            .into(animeImageView)
+
+        animeTitle.text = animeResponse.data?.title
+        animeJapaneseTitle.text = animeResponse.data?.titleJapanese
+        animeSynopsis.text = animeResponse.data?.synopsis
+        animeEpisodes.text = animeResponse.data?.episodes.toString()
+        animeAired.text = animeResponse.data?.aired?.string
+        animeSource.text = animeResponse.data?.source
+    }
+
+    /**
+     * Function that shows the anime data with an animation
+     */
+    private fun showAnimeData(){
+        animeDataLayout.animate()
+            .alpha(1f)
+            .setDuration(1000)
+            .setListener(null)
+
+        animeImageView.animate()
+            .alpha(1f)
+            .setDuration(1000)
+            .setListener(null)
+
+        favoriteButton.animate()
+            .alpha(1f)
+            .setDuration(1000)
+            .setListener(null)
+    }
+
+    /**
+     * Function that handles the click on the favorite button
+     * It adds or removes the anime from the favorites
+     * depending on its current state
+     * @param view The view that was clicked
+     */
     fun onFavoriteClick(view: android.view.View) {
         val dbHelper = AnimeDatabaseHelper(this)
         val db = dbHelper.writableDatabase
 
+        // If the anime is already a favorite, remove it
         if (isFavorite) {
-            val selection = "${AnimeEntry.COLUMN_MAL_ID} = ?"
-            val selectionArgs = arrayOf(intent.getIntExtra("malId", 40974).toString())
-            db.delete(AnimeEntry.TABLE_NAME, selection, selectionArgs)
-            favoriteButton.setImageResource(R.drawable.bookmark)
-            isFavorite = false
+            val selection = "${AnimeEntry.COLUMN_MAL_ID} = ?" // WHERE clause
+            val selectionArgs = arrayOf(intent.getIntExtra("malId", 40974).toString()) // WHERE arguments
+            db.delete(AnimeEntry.TABLE_NAME, selection, selectionArgs) // Delete the anime from the database
+            favoriteButton.setImageResource(R.drawable.bookmark) // Change the icon
+            isFavorite = false // Change the state of the anime
+
+        // If the anime is not a favorite, add it
         } else {
-            val values = ContentValues().apply {
-                put(AnimeEntry.COLUMN_MAL_ID, intent.getIntExtra("malId", 40974))
-                put(AnimeEntry.COLUMN_TITLE, findViewById<TextView>(R.id.EnglishTitle).text.toString())
+            val values = ContentValues().apply { // Create a new row
+                put(AnimeEntry.COLUMN_MAL_ID, intent.getIntExtra("malId", 40974)) // Add the malId
+                put(AnimeEntry.COLUMN_TITLE, findViewById<TextView>(R.id.EnglishTitle).text.toString()) // Add the title
+                put(AnimeEntry.COLUMN_IMAGE_URL, imageUrl) // Add the image URL
             }
-            db.insert(AnimeEntry.TABLE_NAME, null, values)
-            favoriteButton.setImageResource(R.drawable.bookmarked)
-            isFavorite = true
+            db.insert(AnimeEntry.TABLE_NAME, null, values) // Insert the new row
+            favoriteButton.setImageResource(R.drawable.bookmarked) // Change the icon
+            isFavorite = true // Change the state of the anime
         }
 
         db.close()
