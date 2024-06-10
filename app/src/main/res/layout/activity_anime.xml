@@ -8,6 +8,20 @@
     android:background="@drawable/techno_blue"
     tools:context=".ui.anime.AnimeActivity">
 
+    <ImageButton
+        android:id="@+id/FavButton"
+        android:layout_width="78dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/transparent"
+        android:contentDescription="@string/btn_fav"
+        android:onClick="onFavoriteClick"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bookmark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/anime_image"
         android:layout_width="223dp"
@@ -235,16 +249,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/FavButton"
-        android:layout_width="78dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/btn_fav"
-        android:scaleType="centerCrop"
-        android:onClick="onFavoriteClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/not_favorite" />
 </androidx.constraintlayout.widget.ConstraintLayout>

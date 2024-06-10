@@ -6,5 +6,6 @@ package com.akashi.animelistdatabase.data.enums
 enum class ConsultType {
     ANIME,
     MANGA,
-    CHARACTER
+    FAVORITE_ANIME,
+    FAVORITE_MANGA
 }

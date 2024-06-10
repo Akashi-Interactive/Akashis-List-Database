@@ -143,7 +143,7 @@ class AnimeActivity : AppCompatActivity() {
             val selection = "${AnimeEntry.COLUMN_MAL_ID} = ?"
             val selectionArgs = arrayOf(intent.getIntExtra("malId", 40974).toString())
             db.delete(AnimeEntry.TABLE_NAME, selection, selectionArgs)
-            favoriteButton.setImageResource(R.drawable.not_favorite)
+            favoriteButton.setImageResource(R.drawable.bookmark)
             isFavorite = false
         } else {
             val values = ContentValues().apply {
@@ -151,7 +151,7 @@ class AnimeActivity : AppCompatActivity() {
                 put(AnimeEntry.COLUMN_TITLE, findViewById<TextView>(R.id.EnglishTitle).text.toString())
             }
             db.insert(AnimeEntry.TABLE_NAME, null, values)
-            favoriteButton.setImageResource(R.drawable.favorite)
+            favoriteButton.setImageResource(R.drawable.bookmarked)
             isFavorite = true
         }
 
